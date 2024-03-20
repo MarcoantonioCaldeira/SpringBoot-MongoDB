@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+
 
 @Configuration
 public class Instantiation implements CommandLineRunner{
@@ -16,7 +16,7 @@ public class Instantiation implements CommandLineRunner{
     private UserRepository userRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... arg0) throws Exception {
         
         userRepository.deleteAll();
 
