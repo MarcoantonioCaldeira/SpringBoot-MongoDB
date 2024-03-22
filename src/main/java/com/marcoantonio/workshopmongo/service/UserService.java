@@ -1,6 +1,7 @@
 package com.marcoantonio.workshopmongo.service;
 
 import com.marcoantonio.workshopmongo.domain.User;
+import com.marcoantonio.workshopmongo.dto.UserDTO;
 import com.marcoantonio.workshopmongo.repository.UserRepository;
 import com.marcoantonio.workshopmongo.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,11 @@ public class UserService {
         return user;
     }
 
+    public User insert(User obj){
+        return repo.insert(obj);
+    }
+
+    public User fromDTO(UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getNome(), objDto.getEmail());
+    }
 }
