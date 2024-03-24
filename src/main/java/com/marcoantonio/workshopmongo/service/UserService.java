@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,11 +21,8 @@ public class UserService {
     }
 
     public User findById(String id) {
-        User user = repo.findOne(id);
-        if(user == null) {
-            throw new ObjectNotFoundException("Objeto não encontrado!!!");
-        }
-        return user;
+        Optional<User> userOptional = repo.findById(id);
+        return userOptional.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!!!"));
     }
 
     public User insert(User obj){
@@ -32,12 +30,12 @@ public class UserService {
     }
 
     public void delete(String id){
-        findById(id);
-        repo.delete(id);
+        User user = findById(id);
+        repo.delete(user);
     }
 
     public User update(User obj){
-        User newObj = repo.findOne(obj.getId());
+        User newObj = repo.findById(obj.getId()).orElseThrow(() -> new IllegalArgumentException("User not found"));
         updateData(newObj, obj);
         return repo.save(newObj);
     }
