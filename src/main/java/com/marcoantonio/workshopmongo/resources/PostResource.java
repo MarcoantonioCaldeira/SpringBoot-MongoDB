@@ -3,6 +3,7 @@ package com.marcoantonio.workshopmongo.resources;
 import com.marcoantonio.workshopmongo.domain.Post;
 import com.marcoantonio.workshopmongo.domain.User;
 import com.marcoantonio.workshopmongo.dto.UserDTO;
+import com.marcoantonio.workshopmongo.resources.util.URL;
 import com.marcoantonio.workshopmongo.service.PostService;
 import com.marcoantonio.workshopmongo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,6 @@ public class PostResource {
     @Autowired
     private PostService service;
 
-
-
     @RequestMapping(value="/{id}",method=RequestMethod.GET)
     public ResponseEntity<Post> findById(@PathVariable String id) {
         Post obj = service.findById(id);
@@ -30,6 +29,12 @@ public class PostResource {
     }
 
 
+    @RequestMapping(value="/tietlesearch",method=RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+            text = URL.decodeParam(text);
+            List<Post> list = service.findByTitle(text);
+            return ResponseEntity.ok().body(list);
+    }
 
 
 
